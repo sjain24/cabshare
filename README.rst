@@ -1,4 +1,4 @@
-cabshare
+CabShare
 ========
 
 Cab share web application based on Django where a user can search and join other people having similar arrival/departure time.
@@ -10,10 +10,26 @@ Cab share web application based on Django where a user can search and join other
      :target: https://github.com/ambv/black
      :alt: Black code style
 
+Installation
+------------
+Make sure to have the following on your host:
 
-:License: MIT
+- Python 3.8
+- `PostgreSQL 12 <https://www.postgresql.org/download/windows/>`_
+- Cookiecutter ``$ pip install cookiecutter``
+- virtualenv ``$ pip install virtualenv``
+ 
+Setup and the activate virtual environment ``$ virtualenv venv``
 
+Install the dependencies in this venv (make sure that you are in the project folder)
 
+- ``$ pip install -r requirements/base.txt``
+- ``$ pip install -r requirements/local.txt``
+
+Setup postgres database
+
+- ``$ createdb cabshare -U postgres --password <password>``
+- Go to config/settings/local.py and in DATABASES add your username and passowrd for postgres
 Settings
 --------
 
@@ -75,3 +91,17 @@ Deployment
 ----------
 
 The following details how to deploy this application.
+
+- ``$ python manage.py makemigrations``
+- ``$ python manage.py migrate``
+- ``$ python manage.py runserver``
+
+Done!! The website is active on http://127.0.0.1:8000/
+
+
+
+:Authors:
+    Siddharth Jain,
+    Anamitra Mandal
+
+:Version: 0.1.0 of 29/08/2020
