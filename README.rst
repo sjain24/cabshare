@@ -28,7 +28,7 @@ Install the dependencies in this venv (make sure that you are in the project fol
 
 Setup postgres database
 
-- ``$ createdb cabshare -U postgres --password <password>``
+- ``$ createdb -U postgres --password <password>  cabshare``
 - Go to config/settings/local.py and in DATABASES add your username and passowrd for postgres
 Settings
 --------
