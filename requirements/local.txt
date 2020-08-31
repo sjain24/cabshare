@@ -1,5 +1,5 @@
 -r base.txt
-
+django-phonenumber-field[phonenumbers] # phonenumber_field
 Werkzeug==1.0.1 # https://github.com/pallets/werkzeug
 ipdb==0.13.3  # https://github.com/gotcha/ipdb
 psycopg2-binary==2.8.5  # https://github.com/psycopg/psycopg2
