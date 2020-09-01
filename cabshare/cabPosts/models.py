@@ -13,7 +13,7 @@ class Post(models.Model):
     flightOrTrainDetails = models.TextField(blank=True)
     spaceLeft=models.IntegerField(default=3)
     peopleInterested=models.IntegerField(default=0)
-    author=models.ForeignKey(User , on_delete=models.CASCADE)
+    author = models.ForeignKey(User , on_delete=models.CASCADE)
 
     def __str__(self):
         return self.whereFrom + '-' +self.whereTo + 'on '+ str(self.date)+ ' at '+str(self.time)
@@ -23,11 +23,11 @@ class Post(models.Model):
         #super(Post, self).save(*args, **kwargs)
 
 class Comment(models.Model):
-    name = models.CharField(max_length=255)
-    email = models.EmailField(max_length=255)
-    content = models.TextField()
+    comment_author = models.ForeignKey(User , on_delete=models.CASCADE)
+    email = models.EmailField()
+    content = models.TextField(max_length=500)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     created_on = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.content+' by '+self.name+' on post '+self.post.pk
+        return self.content + ' by ' + ' on post '+ str(self.post.pk)
