@@ -7,7 +7,11 @@
 
 
 {% block inner %}
-<h1>{% trans "Confirm E-mail Address" %}</h1>
+<div class="col-lg-6 center-block mx-auto">
+    <div class="card card-stats">
+    <!-- Card body -->
+        <div class="card-body">
+            <h1>{% trans "Confirm E-mail Address" %}</h1>
 
 {% if confirmation %}
 
@@ -27,5 +31,12 @@
 <p>{% blocktrans %}This e-mail confirmation link expired or is invalid. Please <a href="{{ email_url }}">issue a new e-mail confirmation request</a>.{% endblocktrans %}</p>
 
 {% endif %}
+            
+        </div>
+        
+    </div>
+    </div>
+</div>
+
 
 {% endblock %}

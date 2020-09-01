@@ -271,3 +271,6 @@ SOCIALACCOUNT_ADAPTER = "cabshare.users.adapters.SocialAccountAdapter"
 
 # Your stuff...
 # ------------------------------------------------------------------------------
+WHITENOISE_MIMETYPES = {
+    '.xsl': 'application/xml'
+}
