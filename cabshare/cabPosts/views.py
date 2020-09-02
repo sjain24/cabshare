@@ -1,10 +1,4 @@
 from django.shortcuts import render
-from .models import Post, Comment
-
-
-
-# Create your views here.
-from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
