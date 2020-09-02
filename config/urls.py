@@ -16,6 +16,7 @@ urlpatterns = [
     path("users/", include("cabshare.users.urls", namespace="users")),
     path("accounts/", include("allauth.urls")),
     # Your stuff: custom urls includes go here
+    path("cabPosts/", include("cabPosts.urls", namespace="cabPosts")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
