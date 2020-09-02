@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+
+
+
+{% block content %}
+<div class="container">
+    <form method="POST">
+        {{postForm}}
+        <button class="btn btn-primary" type="submit">Create Post</button>
+    </form>
+</div>
+{% endblock content %}
