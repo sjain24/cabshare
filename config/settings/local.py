@@ -60,9 +60,9 @@ INSTALLED_APPS += ["django_extensions"]  # noqa F405
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "cabshare2",
+        "NAME": "cabshare",
         "USER": "postgres",
-        "PASSWORD": "ZC4pSKev",
+        "PASSWORD": "anamitra",
         "HOST": "127.0.0.1",
         "PORT": "5432",
     }
