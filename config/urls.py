@@ -14,7 +14,7 @@ urlpatterns = [
     path(settings.ADMIN_URL, admin.site.urls),
     # User management
     path("users/", include("cabshare.users.urls", namespace="users")),
-    path("cabPosts/", include("cabshare.cabPosts.urls", namespace="cabPosts")),
+    path("cabPosts/", include("cabPosts.urls", namespace="cabPosts")),
     path("accounts/", include("allauth.urls")),
     # Your stuff: custom urls includes go here
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
