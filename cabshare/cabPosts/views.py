@@ -27,6 +27,7 @@ def get_posts(request):
                 comment = commentForm.save(commit=False)
                 comment.name = request.user
                 comment.post = post_instance
+                comment.email = request.user.email
                 comment.save()
                 return redirect('cabPosts:posts')
             else:
