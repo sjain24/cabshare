@@ -62,7 +62,7 @@ DATABASES = {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": "cabshare",
         "USER": "postgres",
-        "PASSWORD": "anamitra",
+        "PASSWORD": "ZC4pSKev",
         "HOST": "127.0.0.1",
         "PORT": "5432",
     }

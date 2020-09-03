@@ -1,14 +1,14 @@
 {% extends "base.html" %}
 
 
-
+{% load crispy_forms_tags %}
 
 {% block content %}
 <div class="container">
     <form method="POST">
         {% csrf_token %}
-        {{postForm}}
-        <button class="btn btn-primary" type="submit">Create Post</button>
+        {{postForm | crispy}}
+        <button class="btn btn-primary" type="submit" name="post">Create Post</button>
     </form>
     
     {% for post in posts %}
@@ -17,15 +17,17 @@
             <p>From:{{post.whereFrom}} <br> To:{{post.whereTo}} <br> On:{{post.date}}<br> At:{{post.time}}</p>
         </div>
         <div>
-           <!-- {% for comment in comments %}
-                {% if comment.post==post}
-                <p>{{comment.content}}</p>
-            {% endfor %}-->
+            {% for comment in comments %}
+                {% if comment.post.id == post.id %}
+                    <p>{{ comment.content }}</p>
+                {% endif %}
+            {% endfor %}
         </div>
         <form method="POST">
             {% csrf_token %}
-            {{commentForm}}
-            <button class="btn btn-primary" type="submit">Create Comment</button>
+            {{commentForm | crispy}}
+            <input type="hidden" value="{{ post.id }}" name="post_id">
+            <button class="btn btn-primary" type="submit" name="comment">Create Comment</button>
         </form>
 
 
