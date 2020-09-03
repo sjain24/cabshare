@@ -21,7 +21,6 @@ def get_posts(request):
             return redirect('cabPosts:posts')
         else:
             commentForm=CommentForm(request.POST)
-            
             if commentForm.is_valid():
                 post_id = request.POST['post_id']
                 post_instance = get_object_or_404(Post, id=post_id)
@@ -40,4 +39,4 @@ def get_posts(request):
         comments=Comment.objects.all()
         args = {'postForm':postForm, 'posts':posts ,'commentForm':commentForm,'comments':comments}
 
-    return render(request, 'cabPosts/post.html', args)
+    return render(request, 'cabPosts/posts.html', args)

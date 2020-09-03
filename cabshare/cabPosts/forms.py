@@ -2,7 +2,7 @@ from django import forms
 from .models import Post, Comment
 
 
-class PostForm(forms.Form):
+class PostForm(forms.ModelForm):
     whereFrom = forms.CharField(max_length=255)
     whereTo = forms.CharField(max_length=255)
     date = forms.DateField()
@@ -15,7 +15,7 @@ class PostForm(forms.Form):
         model = Post
         fields = {'whereFrom','whereTo', 'date','time','flightOrTrainDetails', 'spaceLeft',}
 
-class CommentForm(forms.Form):
+class CommentForm(forms.ModelForm):
     content = forms.CharField(max_length=500)
 
     class Meta:

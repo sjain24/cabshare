@@ -8,7 +8,8 @@
     <form method="POST">
         {% csrf_token %}
         {{postForm | crispy}}
-        <button class="btn btn-primary" type="submit" name="post">Create Post</button>
+    
+        <button class="btn btn-primary" type="submit" name="post">Create Post</button>  
     </form>
     
     {% for post in posts %}
