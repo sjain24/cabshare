@@ -15,6 +15,9 @@ class Post(models.Model):
     peopleInterested=models.IntegerField(default=0)
     author = models.ForeignKey(User , on_delete=models.CASCADE)
 
+    class meta:
+        app_label  = 'cabPosts'
+
     def __str__(self):
         return self.whereFrom + '-' +self.whereTo + 'on '+ str(self.date)+ ' at '+str(self.time)
    # comments=models.TextField()
@@ -23,7 +26,7 @@ class Post(models.Model):
         #super(Post, self).save(*args, **kwargs)
 
 class Comment(models.Model):
-    comment_author = models.ForeignKey(User , on_delete=models.CASCADE)
+    name = models.ForeignKey(User , on_delete=models.CASCADE)
     email = models.EmailField()
     content = models.TextField(max_length=500)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
