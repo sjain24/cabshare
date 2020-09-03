@@ -1,4 +1,3 @@
-
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
@@ -41,5 +40,4 @@ def get_posts(request):
         comments=Comment.objects.all()
         args = {'postForm':postForm, 'posts':posts ,'commentForm':commentForm,'comments':comments}
 
-    return render(request, 'cabPosts/posts.html', args)
-
+    return render(request, 'cabPosts/post.html', args)
