@@ -4,32 +4,39 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-<div class="container">
+<div class="container col-md-6">
     <form method="POST">
         {% csrf_token %}
         {{postForm | crispy}}
     
         <button class="btn btn-primary" type="submit" name="post">Create Post</button>  
     </form>
-    
+    <hr>
     {% for post in posts %}
+    <hr>
+
         <div>
             <h2>{{post.author}}</h2>
-            <p>From:{{post.whereFrom}} <br> To:{{post.whereTo}} <br> On:{{post.date}}<br> At:{{post.time}}</p>
+            <p>From: {{post.whereFrom}} <br> To: {{post.whereTo}} <br> On: {{post.date}}<br> At: {{post.time}}</p>
         </div>
         <div>
-            {% for comment in comments %}
+            <div class="text-muted">
+                {% for comment in comments %}
                 {% if comment.post.id == post.id %}
-                    <p>{{ comment.content }}</p>
+                    <p><span>{{comment.name}}</span>: {{ comment.content }}</p> 
                 {% endif %}
-            {% endfor %}
+                {% endfor %}
+            </h5>
+            
         </div>
+        
         <form method="POST">
             {% csrf_token %}
             {{commentForm | crispy}}
             <input type="hidden" value="{{ post.id }}" name="post_id">
             <button class="btn btn-primary" type="submit" name="comment">Create Comment</button>
         </form>
+        
 
 
     {% endfor %}
