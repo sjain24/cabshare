@@ -5,13 +5,11 @@
 
 {% block content %}
 <div class="container col-md-6">
-    <form method="POST">
-        {% csrf_token %}
-        {{postForm | crispy}}
-    
-        <button class="btn btn-primary" type="submit" name="post">Create Post</button>  
-    </form>
-
+    <form action="{% url 'cabPosts:search_results' %}" method="get">
+        <input name="q" type="text" placeholder="Search...">
+        <button class="btn btn-primary" type="submit">Search</button>  
+      </form>
+    <hr>
     {% for post in posts %}
     <hr>
 
@@ -23,7 +21,7 @@
             <div class="text-muted">
                 {% for comment in comments %}
                 {% if comment.post.id == post.id %}
-                    <p><span>{{comment.name}}</span>: {{ comment.content }}</p> 
+                    <p><span>{{ comment.name }}</span>: {{ comment.content }}</p> 
                 {% endif %}
                 {% endfor %}
             </h5>

@@ -6,6 +6,7 @@ from .forms import PostForm, CommentForm
 from .models import Post, Comment
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 
 
 @login_required
@@ -41,3 +42,19 @@ def get_posts(request):
         args = {'postForm':postForm, 'posts':posts ,'commentForm':commentForm,'comments':comments}
 
     return render(request, 'cabPosts/posts.html', args)
+
+@login_required
+def get_search_results(request):
+    object_list = []
+    comments=Comment.objects.all()
+    if request.GET.get('q') is not None:
+        query = request.GET.get('q')
+        object_list = Post.objects.filter(
+            Q(whereFrom__icontains=query) | 
+            Q(whereTo__icontains=query) |
+            Q(date__icontains=query) |
+            Q(time__icontains=query) |
+            Q(flightOrTrainDetails__icontains=query)
+        )
+        
+    return render(request, 'cabPosts/search.html', {'posts' : object_list ,'comments':comments})
