@@ -46,15 +46,35 @@ def get_posts(request):
 @login_required
 def get_search_results(request):
     object_list = []
+    commentForm = CommentForm()
     comments=Comment.objects.all()
-    if request.GET.get('q') is not None:
-        query = request.GET.get('q')
-        object_list = Post.objects.filter(
-            Q(whereFrom__icontains=query) | 
-            Q(whereTo__icontains=query) |
-            Q(date__icontains=query) |
-            Q(time__icontains=query) |
-            Q(flightOrTrainDetails__icontains=query)
-        )
-        
-    return render(request, 'cabPosts/search.html', {'posts' : object_list ,'comments':comments})
+    if request.method=='GET':
+        if request.GET.get('q') is not None:
+            query = request.GET.get('q')
+            object_list = Post.objects.filter(
+                Q(whereFrom__icontains=query) | 
+                Q(whereTo__icontains=query) |
+                Q(date__icontains=query) |
+                Q(time__icontains=query) |
+                Q(flightOrTrainDetails__icontains=query)
+            )
+            
+        return render(request, 'cabPosts/search.html', {'posts' : object_list ,'comments':comments,'commentForm':commentForm})
+    else:
+        if request.method=='POST':
+            commentForm=CommentForm(request.POST)
+            if commentForm.is_valid():
+                post_id = request.POST['post_id']
+                post_instance = get_object_or_404(Post, id=post_id)
+                comment = commentForm.save(commit=False)
+                comment.name = request.user
+                comment.post = post_instance
+                comment.email = request.user.email
+                comment.save()
+                return redirect('cabPosts:posts')
+                #return render(request, 'cabPosts/search.html', {'posts' : object_list ,'comments':comments,'commentForm':commentForm})
+            else:
+                return render(request,'500.html',{})
+        else:
+            return render(request, 'cabPosts/search.html', {'posts' : object_list ,'comments':comments,'commentForm':commentForm})
+
