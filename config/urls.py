@@ -17,7 +17,6 @@ urlpatterns = [
     path("cabPosts/", include("cabPosts.urls", namespace="cabPosts")),
     path("accounts/", include("allauth.urls")),
     # Your stuff: custom urls includes go here
-    path("cabPosts/", include("cabPosts.urls", namespace="cabPosts")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
