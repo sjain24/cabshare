@@ -118,3 +118,17 @@ def delete_my_post(request,key):
     post.delete()
     return redirect('cabPosts:my_posts_results')
 
+def edit_my_post(request,key):
+    post = Post.objects.get(id=key)
+    if request.method == 'POST':
+        form = PostForm(request.POST, instance=post)
+        if form.is_valid():
+            form.save()
+            #url = reverse('postpage', kwargs={'key': key})
+            return redirect('cabPosts:my_posts_results')
+        else:
+            form = PostForm(instance=post)
+    else:
+        form = PostForm(instance=post)
+    return render(request, 'cabPosts/edit_my_post.html', {'form':form, 'post':post})
+

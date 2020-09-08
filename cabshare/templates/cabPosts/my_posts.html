@@ -22,6 +22,9 @@
             <button type="button">
                 <a href="{% url 'cabPosts:delete_my_post'  key=post.id %}">Delete</a>
             </button>
+            <button type="button">
+                <a href="{% url 'cabPosts:edit_my_post'  key=post.id %}">Edit Post</a>
+            </button>
         </div>
         <div>
             <div class="text-muted">
