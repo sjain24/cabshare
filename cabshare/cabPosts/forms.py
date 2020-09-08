@@ -2,10 +2,14 @@ from django import forms
 from .models import Post, Comment
 from django.utils import timezone
 
-
+CHOICES = [
+    ('Airport','Airport'),
+    ('Campus','Campus'),
+    ('Railway Station','Railway station'),
+]
 class PostForm(forms.ModelForm):
-    whereFrom = forms.CharField(label="From", max_length=255, required = True)
-    whereTo = forms.CharField(label="To", max_length=255, required = True)
+    whereFrom = forms.CharField(label="From", widget=forms.Select(choices=CHOICES), required = True, initial=CHOICES[0] )
+    whereTo = forms.CharField(label="To", widget=forms.Select(choices=CHOICES), required = True, initial=CHOICES[1])
     date = forms.DateField(initial=timezone.now(), widget = forms.SelectDateWidget, required = True)
     time = forms.TimeField(initial=timezone.now(), required = True)
     flightOrTrainDetails = forms.CharField(label = "Details", required = False)
@@ -24,7 +28,7 @@ class CommentForm(forms.ModelForm):
         fields={'content',}
 
 class SearchForm(forms.Form):
-    whereFrom = forms.CharField(label="From", max_length=255, required = True)
-    whereTo = forms.CharField(label="To", max_length=255, required = False)
+    whereFrom = forms.CharField(label="From", widget=forms.Select(choices=CHOICES), required = True, initial=CHOICES[0])
+    whereTo = forms.CharField(label="To", widget=forms.Select(choices=CHOICES), required = False, initial=CHOICES[1])
     date = forms.DateField(initial=timezone.now(), required = False)
     time = forms.TimeField(initial=timezone.now(), required = False)

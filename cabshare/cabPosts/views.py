@@ -92,7 +92,6 @@ def get_my_posts(request):
             'comments':comments,
             'current_user':current_user
         }
-
     return render(request, 'cabPosts/my_posts.html', args)
 
 
@@ -110,9 +109,5 @@ def edit_my_post(request, key):
             form.save()
             #url = reverse('postpage', kwargs={'key': key})
             return redirect('cabPosts:my_posts_results')
-        else:
-            form = PostForm(instance=post)
-    else:
-        form = PostForm(instance=post)
+    form = PostForm(instance=post)
     return render(request, 'cabPosts/edit_my_post.html', {'form':form, 'post':post})
-
