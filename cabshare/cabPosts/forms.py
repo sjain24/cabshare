@@ -2,6 +2,7 @@ from django import forms
 from .models import Post, Comment
 from django.utils import timezone
 
+
 class PostForm(forms.ModelForm):
     whereFrom = forms.CharField(label="From", max_length=255, required = True)
     whereTo = forms.CharField(label="To", max_length=255, required = True)
@@ -22,9 +23,8 @@ class CommentForm(forms.ModelForm):
         model = Comment
         fields={'content',}
 
-# class SearchForm(forms.Form):
-#     whereFrom = forms.CharField(label="From", max_length=255, required = True)
-#     whereTo = forms.CharField(label="To", max_length=255, required = False)
-#     date = forms.DateField(initial=timezone.now(), widget = forms.SelectDateWidget, required = False)
-#     time = forms.TimeField(initial=timezone.now(), required = False)
-#     flightOrTrainDetails = forms.CharField(label = "Details", required = False)
+class SearchForm(forms.Form):
+    whereFrom = forms.CharField(label="From", max_length=255, required = True)
+    whereTo = forms.CharField(label="To", max_length=255, required = False)
+    date = forms.DateField(initial=timezone.now(), required = False)
+    time = forms.TimeField(initial=timezone.now(), required = False)

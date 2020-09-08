@@ -6,7 +6,9 @@
 {% block content %}
 <div class="container col-md-6">
     <form action="{% url 'cabPosts:search_results' %}" method="get">
-        <input name="q" type="text" placeholder="Search...">
+        
+        {{form | crispy}}
+
         <button class="btn btn-primary" type="submit">Search</button>  
       </form>
     <hr>
