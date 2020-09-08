@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container col-md-6">
+    <form action="{% url 'cabPosts:search_results' %}" method="get">
+        
+        {{form | crispy}}
+
+        <button class="btn btn-primary" type="submit">Search</button>  
+      </form>
+    <hr>
+    {% for post in posts %}
+    <hr>
+
+        <div>
+            <h2>{{post.author}}</h2>
+            <p>From: {{post.whereFrom}} <br> To: {{post.whereTo}} <br> On: {{post.date}}<br> At: {{post.time}}</p>
+        </div>
+        <div>
+            <div class="text-muted">
+                {% for comment in comments %}
+                {% if comment.post.id == post.id %}
+                    <p><span>{{ comment.name }}</span>: {{ comment.content }}</p> 
+                {% endif %}
+                {% endfor %}
+            </h5>
+            
+        </div>
+        
+        <form method="POST">
+            {% csrf_token %}
+            {{commentForm | crispy}}
+            <input type="hidden" value="{{ post.id }}" name="post_id">
+            <button class="btn btn-primary" type="submit" name="comment">Create Comment</button>
+        </form>
+        
+
+
+    {% endfor %}
+
+</div>
+{% endblock content %}
