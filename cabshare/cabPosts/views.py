@@ -29,34 +29,90 @@ def get_posts(request):
                 comment.post = post_instance
                 comment.email = request.user.email
                 comment.save()
+            return redirect('cabPosts:posts')
+    else:
+        postForm = PostForm()
+        searchForm = SearchForm()
+        commentForm = CommentForm()
+        comments=Comment.objects.all()
+        if request.GET.get('q') is not None:
+            object_list = Post.objects.filter(
+                Q(whereFrom__icontains=request.GET.get('whereFrom')) &
+                Q(whereTo__icontains=request.GET.get('whereTo')) &
+                Q(date__icontains=request.GET.get('date')) &
+                Q(time__icontains=request.GET.get('time'))
+            )
+        else:
+            object_list = Post.objects.all()
+        args = {
+            'postForm':postForm,
+            'posts':object_list,
+            'commentForm':commentForm,
+            'comments':comments,
+            'searchForm':searchForm
+        }
+
+    return render(request, 'cabPosts/posts.html', args)
+
+@login_required
+def get_my_posts(request):
+    if request.method == 'POST':
+        if 'post' in request.POST:
+            postForm = PostForm(request.POST)
+            if postForm.is_valid():
+                post = postForm.save(commit=False)
+                post.author = request.user
+                post.save()
+                
+            return redirect('cabPosts:posts')
+        else:
+            commentForm=CommentForm(request.POST)
+            if commentForm.is_valid():
+                post_id = request.POST['post_id']
+                post_instance = get_object_or_404(Post, id=post_id)
+                comment = commentForm.save(commit=False)
+                comment.name = request.user
+                comment.post = post_instance
+                comment.email = request.user.email
+                comment.save()
                 return redirect('cabPosts:posts')
             else:
-                return render(request,'500.html',{})
+                return redirect('cabPosts:my_posts')
 
     else:
         postForm = PostForm()
         posts = Post.objects.all()
         commentForm = CommentForm()
-        comments=Comment.objects.all()
-        args = {'postForm':postForm, 'posts':posts ,'commentForm':commentForm,'comments':comments}
+        current_user = request.user
+        comments = Comment.objects.all()
+        args = {
+            'postForm':postForm,
+            'posts':posts ,
+            'commentForm':commentForm,
+            'comments':comments,
+            'current_user':current_user
+        }
 
-    return render(request, 'cabPosts/posts.html', args)
+    return render(request, 'cabPosts/my_posts.html', args)
 
-@login_required
-def get_search_results(request):
-    object_list = []
-    searchForm = SearchForm()
-    comments=Comment.objects.all()
-    if request.GET.get('whereFrom') is not None:
-        where = request.GET.get('whereFrom')
-        to = request.GET.get('whereTo')
-        date = request.GET.get('date')
-        time = request.GET.get('time')
-        object_list = Post.objects.filter(
-            Q(whereFrom__icontains=where) &
-            Q(whereTo__icontains=to) &
-            Q(date__icontains=date) &
-            Q(time__icontains=time)
-        )
 
-    return render(request, 'cabPosts/search.html', {'form':searchForm, 'posts' : object_list ,'comments':comments})
+def delete_my_post(request, key):
+    post = Post.objects.get(id=key)
+    print(post.id)
+    post.delete()
+    return redirect('cabPosts:my_posts_results')
+
+def edit_my_post(request, key):
+    post = Post.objects.get(id=key)
+    if request.method == 'POST':
+        form = PostForm(request.POST, instance=post)
+        if form.is_valid():
+            form.save()
+            #url = reverse('postpage', kwargs={'key': key})
+            return redirect('cabPosts:my_posts_results')
+        else:
+            form = PostForm(instance=post)
+    else:
+        form = PostForm(instance=post)
+    return render(request, 'cabPosts/edit_my_post.html', {'form':form, 'post':post})
+

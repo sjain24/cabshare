@@ -4,42 +4,47 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-<div class="container col-md-6">
-    <form method="POST">
-        {% csrf_token %}
-        {{postForm | crispy}}
+<div class="row">
+    <div class="col-lg-2">
+    </div>
+    <div class="col-lg-7">
+        <form method="POST">
+            {% csrf_token %}
+            {{postForm | crispy}}
+        
+            <button class="btn btn-primary" type="submit" name="post">Create Post</button>  
+        </form>
     
-        <button class="btn btn-primary" type="submit" name="post">Create Post</button>  
-    </form>
-
-    {% for post in posts %}
-    <hr>
-
-        <div>
+        {% for post in posts %}
+        <hr>
             <h2>{{post.author}}</h2>
             <p>From: {{post.whereFrom}} <br> To: {{post.whereTo}} <br> On: {{post.date}}<br> At: {{post.time}}</p>
-        </div>
-        <div>
+            
             <div class="text-muted">
                 {% for comment in comments %}
                 {% if comment.post.id == post.id %}
                     <p><span>{{comment.name}}</span>: {{ comment.content }}</p> 
                 {% endif %}
                 {% endfor %}
-            </h5>
+            </div>
             
-        </div>
-        
-        <form method="POST">
+            <form method="POST">
+                {% csrf_token %}
+                {{commentForm | crispy}}
+                <input type="hidden" value="{{ post.id }}" name="post_id">
+                <button class="btn btn-primary" type="submit" name="comment">Create Comment</button>
+            </form>
+        {% endfor %}
+    </div>
+    <div class="col-lg-3">
+        <form method="GET">
             {% csrf_token %}
-            {{commentForm | crispy}}
-            <input type="hidden" value="{{ post.id }}" name="post_id">
-            <button class="btn btn-primary" type="submit" name="comment">Create Comment</button>
+            {{searchForm | crispy}}
+            <input type="hidden" value="q"  name="q">
+            <button class="btn btn-primary" type="submit">Search</button>  
         </form>
-        
-
-
-    {% endfor %}
-
+    </div>
 </div>
+
+
 {% endblock content %}
