@@ -1,10 +1,10 @@
-{% extends "base.html" %}
+{% extends "cabPosts/base.html" %}
 
 
 {% load crispy_forms_tags %}
 
 {% block content %}
-<div class="container col-md-6">
+<div class="col-md-6">
     <form method="POST">
         {% csrf_token %}
         {{postForm | crispy}}
@@ -19,11 +19,11 @@
         <div>
             <h2>{{post.author}}</h2>
             <p>From: {{post.whereFrom}} <br> To: {{post.whereTo}} <br> On: {{post.date}}<br> At: {{post.time}}</p>
-            <button type="button">
-                <a href="{% url 'cabPosts:delete_my_post'  key=post.id %}">Delete</a>
+            <button class="btn btn-danger" type="button" >
+                <a href="{% url 'cabPosts:delete_my_post'  key=post.id %}" style="color: white;">Delete</a>
             </button>
-            <button type="button">
-                <a href="{% url 'cabPosts:edit_my_post'  key=post.id %}">Edit Post</a>
+            <button class="btn btn-default" type="button">
+                <a href="{% url 'cabPosts:edit_my_post'  key=post.id %}" style="color: white;">Edit Post</a>
             </button>
         </div>
         <div>
